@@ -14,9 +14,6 @@ void printArray(int* ar, int begin, int end)
 //which portion of the array am I mergeSorting....
 void mergeSort(int* ar, int begin, int end)
 {
-    cout << "Merge Sorting: ";
-    printArray(ar, begin, end);
-
     //if it is not a 1 list (not trivially sorted)
     if(begin != end)
     {
@@ -35,13 +32,41 @@ void mergeSort(int* ar, int begin, int end)
         mergeSort(ar, begin2, end2);
 
         //now perform the merge step
-        cout << "Now we have to merge!!!!\n Start to cry Clancy!!!\n";
+        int length = end - begin + 1;
+        int temp[length];
+        for(int i = 0; i < length; i++)
+        {
+            if(begin1 > end1)
+            {
+                //begin2 is the winner by default
+                temp[i] = ar[begin2];
+                begin2++;
+            }
+            else if(begin2 > end2)
+            {
+                //begin1 is the winner by default
+                temp[i] = ar[begin1];
+                begin1++;
+            }
+            else if(ar[begin1] < ar[begin2])
+            {
+                temp[i] = ar[begin1];
+                begin1++;
+            }
+            else
+            {
+                temp[i] = ar[begin2];
+                begin2++;
+            }  
+        }
+
+        //now temp has the 2 halves of the list merged
+        //we now have to copy those values back into ar
+        for(int arPos = begin, tempPos = 0; tempPos < length; tempPos++, arPos++)
+        {
+            ar[arPos] = temp[tempPos];
+        }
     }
-    else
-    {
-        cout << "One List! Do nothing\n";
-    }
-    
 }
 
 int main()
